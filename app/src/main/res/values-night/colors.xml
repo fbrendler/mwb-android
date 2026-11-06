@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Paleta no estilo PowerToys / Windows 11 (tema escuro) -->
+    <color name="pt_page">#202020</color>
+    <color name="pt_card">#2B2B2B</color>
+    <color name="pt_card_stroke">#1D1D1D</color>
+    <color name="pt_control">#2F2F2F</color>
+    <color name="pt_control_stroke">#454545</color>
+    <color name="pt_subtle">#333333</color>
+    <color name="pt_text_primary">#FFFFFF</color>
+    <color name="pt_text_secondary">#C5C5C5</color>
+    <color name="pt_accent">#60CDFF</color>
+    <color name="pt_on_accent">#000000</color>
+    <color name="pt_accent_soft">#1F3A4D</color>
+    <color name="pt_success">#6CCB5F</color>
+    <color name="pt_success_bg">#393D1B</color>
+    <color name="pt_caution">#FCE100</color>
+    <color name="pt_caution_bg">#433519</color>
+    <color name="pt_critical">#FF99A4</color>
+    <color name="pt_critical_bg">#442726</color>
+    <color name="pt_neutral">#9D9D9D</color>
+    <color name="pt_neutral_bg">#323232</color>
+    <color name="pt_log_bg">#1C1C1C</color>
+    <color name="pt_log_text">#D6D6D6</color>
+
+    <!-- Marca Brendler© -->
+    <color name="brand_purple">#8B5CF6</color>
+    <color name="brand_amber">#F59E0B</color>
+</resources>

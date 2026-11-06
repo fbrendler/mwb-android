@@ -1,0 +1,96 @@
+<resources>
+    <string name="app_name">Mouse Without Borders for Android by Brendler©</string>
+    <!-- Nome curto embaixo do ícone (a tela inicial corta nomes longos) -->
+    <string name="app_name_short">MWB Brendler</string>
+    <string name="app_subtitle">Controle o Android pelo mouse e teclado do PC</string>
+    <string name="app_description">Use o mouse e o teclado do PC (Mouse Without Borders do PowerToys) para controlar este Android.</string>
+    <string name="accessibility_service_description">Permite ao Mouse Without Borders for Android by Brendler© simular toques, cliques e teclas recebidos do Mouse Without Borders do PC para controlar este dispositivo Android.</string>
+
+    <!-- Seções -->
+    <string name="section_activation">Ativação</string>
+    <string name="section_connect">Chave de criptografia</string>
+    <string name="section_layout">Layout dos dispositivos</string>
+    <string name="section_behavior">Comportamento</string>
+    <string name="section_troubleshoot">Solução de problemas</string>
+
+    <!-- Cartões -->
+    <string name="card_service_title">Serviço de controle</string>
+    <string name="card_pc_title">PC com o PowerToys</string>
+    <string name="card_pc_desc">Endereço IP do computador e porta do Mouse Without Borders</string>
+    <string name="card_key_title">Chave de Segurança</string>
+    <string name="card_key_desc">Para conectar, digite a chave e o nome do PC que aparecem no PowerToys › Mouse sem Bordas (em \"Nome do host deste dispositivo\").</string>
+    <string name="key_hint">Chave de Segurança</string>
+    <string name="card_name_title">Nome do host deste dispositivo</string>
+    <string name="card_name_desc">Use este nome no PC para conectar ou no layout do PowerToys</string>
+    <string name="card_boot_title">Iniciar com o tablet</string>
+    <string name="card_boot_desc">No Xiaomi/POCO, em Ajustes do app ative \"Início automático\" e, em Economia de bateria, escolha \"Sem restrições\". Sem isso o Android não deixa o app ligar sozinho.</string>
+    <string name="btn_app_settings">Ajustes do app</string>
+    <string name="card_auto_title">Conectar automaticamente</string>
+    <string name="card_auto_desc">Ao ligar o tablet ou abrir o app, conecta ao último PC. Se a rede cair, volta a conectar sozinho.</string>
+    <string name="card_scroll_title">Inverter rolagem</string>
+    <string name="card_scroll_desc">Rolar como no Windows (roda para baixo desce a página)</string>
+    <string name="card_resolution_desc">Detectada automaticamente</string>
+    <string name="logs_desc">Mensagens da conexão. Copie e envie quando algo não funcionar.</string>
+
+    <string name="pc_name_hint">Nome do dispositivo</string>
+    <string name="btn_connect_pt">Conectar-se</string>
+    <string name="btn_copy_name">Copiar nome</string>
+    <string name="card_advanced_title">Opções avançadas</string>
+    <string name="card_advanced_desc">Porta e procura de PCs na rede</string>
+    <string name="server_port_label">Porta</string>
+    <string name="device_name_label">Nome</string>
+    <string name="resolution_label">Resolução da tela</string>
+
+    <!-- Botões -->
+    <string name="btn_connect">Conectar</string>
+    <string name="btn_disconnect">Desconectar</string>
+    <string name="btn_scan">Procurar PCs</string>
+    <string name="btn_scanning">Procurando…</string>
+    <string name="btn_copy_log">Copiar log</string>
+    <string name="btn_enable_accessibility">Ativar</string>
+    <string name="btn_accessibility_active">Ativo</string>
+
+    <!-- Estados -->
+    <string name="accessibility_enabled">Ativado: o app pode mover o cursor, tocar e digitar</string>
+    <string name="accessibility_disabled">Desativado: toque em Ativar e ligue \"Mouse Without Borders for Android by Brendler©\" nas configurações</string>
+    <string name="status_disconnected">Desconectado</string>
+    <string name="status_hint_disconnected">Digite a chave e o nome do PC abaixo e toque em Conectar-se</string>
+    <string name="status_hint_connecting">Tentando falar com o Mouse Without Borders do PC…</string>
+    <string name="status_hint_connected">Leve o mouse até a borda da tela do PC para controlar este aparelho</string>
+    <string name="status_hint_service_off">Atenção: o serviço de controle está desligado. Toque em Ativar abaixo, senão o mouse não aparece aqui.</string>
+    <string name="status_hint_error">Confira a chave de segurança e o log abaixo</string>
+
+    <!-- Layout -->
+    <string name="layout_hint_waiting">O layout real aparece aqui depois que o PC se conectar e enviar a configuração.</string>
+    <string name="layout_hint_ok">Este é o layout definido no PowerToys. Para mudar, arraste os quadros lá no PC.</string>
+    <string name="layout_hint_missing">Este aparelho não está no layout do PowerToys. Adicione-o no PC ou corrija o nome acima.</string>
+    <string name="layout_this_device">Este aparelho</string>
+    <string name="layout_pc">PC</string>
+    <string name="layout_empty">Vazio</string>
+    <string name="layout_connected">Conectado</string>
+    <string name="layout_connecting">Conectando</string>
+    <string name="layout_offline">Desconectado</string>
+
+    <string name="logs_title">Log de eventos</string>
+
+    <!-- Arquivos -->
+    <string name="section_files">Arquivos e imagens</string>
+    <string name="card_send_title">Enviar arquivos ao PC</string>
+    <string name="card_send_desc">O PC salva na Área de Trabalho, pasta MouseWithoutBorders. Também funciona pelo botão Compartilhar de qualquer app.</string>
+    <string name="btn_choose">Escolher</string>
+    <string name="card_receive_title">Receber do PC</string>
+    <string name="card_receive_desc">No PC, copie (Ctrl+C) um arquivo, imagem ou texto grande e, em até 30 s, leve o mouse para o Android. Arquivos vão para Downloads › MouseWithoutBorders e imagens para Imagens › MouseWithoutBorders.</string>
+    <string name="share_label">Enviar ao PC (MWB)</string>
+
+    <!-- Sobre / contato -->
+    <string name="section_about">Sobre</string>
+    <string name="brand_name">Brendler©</string>
+    <string name="about_copyright">© 2026 Brendler · Licença MIT</string>
+    <string name="about_report_title">Relatar problema</string>
+    <string name="about_report_desc">Abre a página de problemas do projeto no GitHub. O log do app é copiado para você colar no relato.</string>
+    <string name="btn_report">Relatar</string>
+    <string name="about_project_title">Página do projeto</string>
+    <string name="about_project_desc">github.com/fbrendler</string>
+    <string name="btn_open">Abrir</string>
+    <string name="about_disclaimer">Projeto independente, sem ligação com a Microsoft. Mouse Without Borders e PowerToys são marcas da Microsoft.</string>
+</resources>

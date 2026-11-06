@@ -1,0 +1,17 @@
+# Arquivos do Android Studio e do Gradle que não vão para o GitHub
+.gradle/
+.kotlin/
+build/
+captures/
+.externalNativeBuild/
+.cxx/
+*.iml
+.idea/
+.DS_Store
+
+# Caminho do SDK no seu PC (cada computador tem o seu)
+local.properties
+
+# Chaves de assinatura do app (nunca publicar)
+*.jks
+*.keystore

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Logo Brendler© (B de pontos, variação LED). Cores em brand_purple / brand_amber (claro e escuro). -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="48dp"
+    android:height="48dp"
+    android:viewportWidth="200"
+    android:viewportHeight="200">
+    <path
+        android:fillColor="@color/brand_purple"
+        android:pathData="M42,28.0a10,10 0 1,0 20,0a10,10 0 1,0 -20,0zM66,28.0a10,10 0 1,0 20,0a10,10 0 1,0 -20,0zM90,28.0a10,10 0 1,0 20,0a10,10 0 1,0 -20,0zM114,28.0a10,10 0 1,0 20,0a10,10 0 1,0 -20,0zM42,52.0a10,10 0 1,0 20,0a10,10 0 1,0 -20,0zM42,76.0a10,10 0 1,0 20,0a10,10 0 1,0 -20,0zM42,100.0a10,10 0 1,0 20,0a10,10 0 1,0 -20,0zM66,100.0a10,10 0 1,0 20,0a10,10 0 1,0 -20,0zM90,100.0a10,10 0 1,0 20,0a10,10 0 1,0 -20,0zM114,100.0a10,10 0 1,0 20,0a10,10 0 1,0 -20,0zM42,124.0a10,10 0 1,0 20,0a10,10 0 1,0 -20,0zM42,148.0a10,10 0 1,0 20,0a10,10 0 1,0 -20,0zM42,172.0a10,10 0 1,0 20,0a10,10 0 1,0 -20,0zM66,172.0a10,10 0 1,0 20,0a10,10 0 1,0 -20,0zM90,172.0a10,10 0 1,0 20,0a10,10 0 1,0 -20,0zM114,172.0a10,10 0 1,0 20,0a10,10 0 1,0 -20,0zM138,76.0a10,10 0 1,0 20,0a10,10 0 1,0 -20,0zM138,124.0a10,10 0 1,0 20,0a10,10 0 1,0 -20,0z" />
+    <path
+        android:fillColor="@color/brand_amber"
+        android:pathData="M138,52.0a10,10 0 1,0 20,0a10,10 0 1,0 -20,0zM138,148.0a10,10 0 1,0 20,0a10,10 0 1,0 -20,0zM166,17.0a7,7 0 1,0 14,0a7,7 0 1,0 -14,0z" />
+</vector>

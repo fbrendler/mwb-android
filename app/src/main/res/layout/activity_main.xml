@@ -1,0 +1,963 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Tela principal no estilo das configurações do PowerToys (Windows 11 / Fluent):
+    cabeçalho, barra de status, seções com cartões (ícone | título e descrição | controle).
+    Cores em res/values/colors.xml (claro) e res/values-night/colors.xml (escuro).
+-->
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/pt_page"
+    android:fillViewport="true">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:id="@+id/content"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingStart="16dp"
+            android:paddingTop="16dp"
+            android:paddingEnd="16dp"
+            android:paddingBottom="24dp"
+            app:layout_constrainedWidth="true"
+            app:layout_constraintWidth_max="840dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <!-- ===== Cabeçalho ===== -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_marginEnd="14dp"
+                    android:contentDescription="@string/app_name"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/ic_app_icon"
+                    app:shapeAppearanceOverlay="@style/PtShape.Icon" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/PtText.PageTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/app_name" />
+
+                    <TextView
+                        style="@style/PtText.CardDesc"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/app_subtitle" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <TextView
+                style="@style/PtText.CardDesc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="@string/app_description" />
+
+            <!-- ===== Barra de status (como a InfoBar do Windows) ===== -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardStatus"
+                style="@style/PtCard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                app:cardBackgroundColor="@color/pt_neutral_bg">
+
+                <LinearLayout
+                    style="@style/PtCardRow"
+                    android:minHeight="72dp">
+
+                    <FrameLayout
+                        android:layout_width="28dp"
+                        android:layout_height="28dp"
+                        android:layout_marginEnd="14dp">
+
+                        <ImageView
+                            android:id="@+id/ivStatusBg"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:importantForAccessibility="no"
+                            android:src="@drawable/bg_pt_circle"
+                            app:tint="@color/pt_neutral" />
+
+                        <ImageView
+                            android:id="@+id/ivStatusIcon"
+                            android:layout_width="18dp"
+                            android:layout_height="18dp"
+                            android:layout_gravity="center"
+                            android:importantForAccessibility="no"
+                            android:src="@drawable/ic_pt_minus"
+                            app:tint="@color/pt_page" />
+                    </FrameLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="12dp"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/tvConnectionStatus"
+                            style="@style/PtText.CardTitle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="sans-serif-medium"
+                            android:text="@string/status_disconnected" />
+
+                        <TextView
+                            android:id="@+id/tvStatusDetail"
+                            style="@style/PtText.CardDesc"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/status_hint_disconnected" />
+                    </LinearLayout>
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnConnect"
+                        style="@style/PtButton.Accent"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/btn_connect"
+                        app:icon="@drawable/ic_pt_connect"
+                        app:iconSize="18dp" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- ===== Ativação ===== -->
+            <TextView
+                style="@style/PtText.Section"
+                android:text="@string/section_activation" />
+
+            <com.google.android.material.card.MaterialCardView
+                style="@style/PtCard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout style="@style/PtCardRow">
+
+                    <ImageView
+                        style="@style/PtCardIcon"
+                        android:src="@drawable/ic_pt_accessibility" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="12dp"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            style="@style/PtText.CardTitle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/card_service_title" />
+
+                        <TextView
+                            android:id="@+id/tvAccessibilityStatus"
+                            style="@style/PtText.CardDesc"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/accessibility_disabled" />
+                    </LinearLayout>
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnEnableAccessibility"
+                        style="@style/PtButton.Standard"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/btn_enable_accessibility" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                style="@style/PtCard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout style="@style/PtCardRow">
+
+                    <ImageView
+                        style="@style/PtCardIcon"
+                        android:src="@drawable/ic_pt_power" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="12dp"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            style="@style/PtText.CardTitle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/card_boot_title" />
+
+                        <TextView
+                            style="@style/PtText.CardDesc"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/card_boot_desc" />
+                    </LinearLayout>
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnAppSettings"
+                        style="@style/PtButton.Standard"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/btn_app_settings" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- ===== Chave de criptografia (igual ao PowerToys) ===== -->
+            <TextView
+                style="@style/PtText.Section"
+                android:text="@string/section_connect" />
+
+            <!-- Chave de Segurança + nome do PC + Conectar-se -->
+            <com.google.android.material.card.MaterialCardView
+                style="@style/PtCard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout style="@style/PtCardRow">
+
+                        <ImageView
+                            style="@style/PtCardIcon"
+                            android:src="@drawable/ic_pt_key" />
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                style="@style/PtText.CardTitle"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/card_key_title" />
+
+                            <TextView
+                                style="@style/PtText.CardDesc"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/card_key_desc" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/pt_card_stroke" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:baselineAligned="false"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:paddingStart="16dp"
+                        android:paddingTop="14dp"
+                        android:paddingEnd="16dp"
+                        android:paddingBottom="14dp">
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            style="@style/PtTextField"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="8dp"
+                            android:layout_weight="1"
+                            android:hint="@string/key_hint"
+                            app:endIconMode="password_toggle">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/etSecurityKey"
+                                style="@style/PtTextField.Edit"
+                                android:fontFamily="monospace"
+                                android:inputType="textPassword" />
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            style="@style/PtTextField"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="8dp"
+                            android:layout_weight="1"
+                            android:hint="@string/pc_name_hint">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/etPcName"
+                                style="@style/PtTextField.Edit"
+                                android:inputType="textCapCharacters"
+                                tools:text="VAIO" />
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btnConnectKey"
+                            style="@style/PtButton.Accent"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/btn_connect_pt" />
+                    </LinearLayout>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Nome do host deste dispositivo -->
+            <com.google.android.material.card.MaterialCardView
+                style="@style/PtCard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout style="@style/PtCardRow">
+
+                    <ImageView
+                        style="@style/PtCardIcon"
+                        android:src="@drawable/ic_pt_tablet" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="12dp"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            style="@style/PtText.CardTitle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/card_name_title" />
+
+                        <TextView
+                            style="@style/PtText.CardDesc"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/card_name_desc" />
+                    </LinearLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/tilDeviceName"
+                        style="@style/PtTextField"
+                        android:layout_width="150dp"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/device_name_label"
+                        app:endIconDrawable="@drawable/ic_pt_copy"
+                        app:endIconContentDescription="@string/btn_copy_name"
+                        app:endIconMode="custom"
+                        app:endIconTint="@color/pt_text_secondary">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/etDeviceName"
+                            style="@style/PtTextField.Edit"
+                            android:inputType="textCapCharacters"
+                            tools:text="POCOPAD" />
+                    </com.google.android.material.textfield.TextInputLayout>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Opções avançadas (recolhidas): porta e procura na rede -->
+            <com.google.android.material.card.MaterialCardView
+                style="@style/PtCard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:id="@+id/rowAdvanced"
+                        style="@style/PtCardRow"
+                        android:background="?attr/selectableItemBackground"
+                        android:clickable="true"
+                        android:focusable="true">
+
+                        <ImageView
+                            style="@style/PtCardIcon"
+                            android:src="@drawable/ic_pt_monitor" />
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="12dp"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                style="@style/PtText.CardTitle"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/card_advanced_title" />
+
+                            <TextView
+                                android:id="@+id/tvAdvancedDesc"
+                                style="@style/PtText.CardDesc"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/card_advanced_desc" />
+                        </LinearLayout>
+
+                        <ImageView
+                            android:id="@+id/ivAdvancedChevron"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:importantForAccessibility="no"
+                            android:src="@drawable/ic_pt_chevron"
+                            app:tint="@color/pt_text_secondary" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/panelAdvanced"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:baselineAligned="false"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:paddingStart="54dp"
+                        android:paddingEnd="16dp"
+                        android:paddingBottom="14dp"
+                        android:visibility="gone">
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            style="@style/PtTextField"
+                            android:layout_width="120dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="8dp"
+                            android:hint="@string/server_port_label">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/etServerPort"
+                                style="@style/PtTextField.Edit"
+                                android:inputType="number"
+                                android:text="15101" />
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <View
+                            android:layout_width="0dp"
+                            android:layout_height="1dp"
+                            android:layout_weight="1" />
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btnScanNetwork"
+                            style="@style/PtButton.Standard"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/btn_scan"
+                            app:icon="@drawable/ic_pt_search"
+                            app:iconSize="18dp" />
+                    </LinearLayout>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- ===== Layout dos dispositivos ===== -->
+            <TextView
+                style="@style/PtText.Section"
+                android:text="@string/section_layout" />
+
+            <com.google.android.material.card.MaterialCardView
+                style="@style/PtCard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <!-- Preenchido pelo código: um quadro por máquina -->
+                    <LinearLayout
+                        android:id="@+id/layoutTiles"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:id="@+id/ivLayoutHint"
+                            android:layout_width="16dp"
+                            android:layout_height="16dp"
+                            android:layout_marginEnd="8dp"
+                            android:importantForAccessibility="no"
+                            android:src="@drawable/ic_pt_layout"
+                            app:tint="@color/pt_text_secondary" />
+
+                        <TextView
+                            android:id="@+id/tvLayoutHint"
+                            style="@style/PtText.CardDesc"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/layout_hint_waiting" />
+                    </LinearLayout>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- ===== Arquivos e imagens ===== -->
+            <TextView
+                style="@style/PtText.Section"
+                android:text="@string/section_files" />
+
+            <com.google.android.material.card.MaterialCardView
+                style="@style/PtCard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout style="@style/PtCardRow">
+
+                    <ImageView
+                        style="@style/PtCardIcon"
+                        android:src="@drawable/ic_pt_upload" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="12dp"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            style="@style/PtText.CardTitle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/card_send_title" />
+
+                        <TextView
+                            style="@style/PtText.CardDesc"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/card_send_desc" />
+                    </LinearLayout>
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnSendFiles"
+                        style="@style/PtButton.Standard"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/btn_choose"
+                        app:icon="@drawable/ic_pt_upload"
+                        app:iconSize="18dp" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                style="@style/PtCard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout style="@style/PtCardRow">
+
+                    <ImageView
+                        style="@style/PtCardIcon"
+                        android:src="@drawable/ic_pt_download" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="12dp"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            style="@style/PtText.CardTitle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/card_receive_title" />
+
+                        <TextView
+                            style="@style/PtText.CardDesc"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/card_receive_desc" />
+                    </LinearLayout>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- ===== Comportamento ===== -->
+            <TextView
+                style="@style/PtText.Section"
+                android:text="@string/section_behavior" />
+
+            <com.google.android.material.card.MaterialCardView
+                style="@style/PtCard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout style="@style/PtCardRow">
+
+                    <ImageView
+                        style="@style/PtCardIcon"
+                        android:src="@drawable/ic_pt_sync" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="12dp"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            style="@style/PtText.CardTitle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/card_auto_title" />
+
+                        <TextView
+                            style="@style/PtText.CardDesc"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/card_auto_desc" />
+                    </LinearLayout>
+
+                    <com.google.android.material.materialswitch.MaterialSwitch
+                        android:id="@+id/switchAutoConnect"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checked="true"
+                        android:contentDescription="@string/card_auto_title" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                style="@style/PtCard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout style="@style/PtCardRow">
+
+                    <ImageView
+                        style="@style/PtCardIcon"
+                        android:src="@drawable/ic_pt_mouse" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="12dp"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            style="@style/PtText.CardTitle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/card_scroll_title" />
+
+                        <TextView
+                            style="@style/PtText.CardDesc"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/card_scroll_desc" />
+                    </LinearLayout>
+
+                    <com.google.android.material.materialswitch.MaterialSwitch
+                        android:id="@+id/switchInvertScroll"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checked="true"
+                        android:contentDescription="@string/card_scroll_title" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                style="@style/PtCard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout style="@style/PtCardRow">
+
+                    <ImageView
+                        style="@style/PtCardIcon"
+                        android:src="@drawable/ic_pt_resolution" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="12dp"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            style="@style/PtText.CardTitle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/resolution_label" />
+
+                        <TextView
+                            style="@style/PtText.CardDesc"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/card_resolution_desc" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/tvScreenResolution"
+                        style="@style/PtText.CardTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/pt_text_secondary"
+                        tools:text="2560 × 1600" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- ===== Solução de problemas ===== -->
+            <TextView
+                style="@style/PtText.Section"
+                android:text="@string/section_troubleshoot" />
+
+            <com.google.android.material.card.MaterialCardView
+                style="@style/PtCard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout style="@style/PtCardRow">
+
+                        <ImageView
+                            style="@style/PtCardIcon"
+                            android:src="@drawable/ic_pt_log" />
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="12dp"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                style="@style/PtText.CardTitle"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/logs_title" />
+
+                            <TextView
+                                style="@style/PtText.CardDesc"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/logs_desc" />
+                        </LinearLayout>
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btnCopyLog"
+                            style="@style/PtButton.Standard"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/btn_copy_log"
+                            app:icon="@drawable/ic_pt_copy"
+                            app:iconSize="18dp" />
+                    </LinearLayout>
+
+                    <androidx.core.widget.NestedScrollView
+                        android:id="@+id/svLog"
+                        android:layout_width="match_parent"
+                        android:layout_height="220dp"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginEnd="16dp"
+                        android:layout_marginBottom="16dp"
+                        android:background="@drawable/bg_pt_log"
+                        android:padding="10dp">
+
+                        <TextView
+                            android:id="@+id/tvLogs"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="monospace"
+                            android:lineSpacingExtra="2dp"
+                            android:textColor="@color/pt_log_text"
+                            android:textIsSelectable="true"
+                            android:textSize="11sp" />
+                    </androidx.core.widget.NestedScrollView>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+
+            <!-- ===== Sobre ===== -->
+            <TextView
+                style="@style/PtText.Section"
+                android:text="@string/section_about" />
+
+            <com.google.android.material.card.MaterialCardView
+                style="@style/PtCard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <!-- Marca: logo + nome + versão -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:padding="16dp">
+
+                        <ImageView
+                            android:layout_width="56dp"
+                            android:layout_height="56dp"
+                            android:layout_marginEnd="16dp"
+                            android:contentDescription="@string/brand_name"
+                            android:src="@drawable/ic_brendler_logo" />
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                style="@style/PtText.CardTitle"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="sans-serif-medium"
+                                android:text="@string/app_name" />
+
+                            <TextView
+                                android:id="@+id/tvVersion"
+                                style="@style/PtText.CardDesc"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                tools:text="Versão 0.1" />
+
+                            <TextView
+                                style="@style/PtText.CardDesc"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/about_copyright" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/pt_card_stroke" />
+
+                    <LinearLayout style="@style/PtCardRow">
+
+                        <ImageView
+                            style="@style/PtCardIcon"
+                            android:src="@drawable/ic_pt_bug" />
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="12dp"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                style="@style/PtText.CardTitle"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/about_report_title" />
+
+                            <TextView
+                                style="@style/PtText.CardDesc"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/about_report_desc" />
+                        </LinearLayout>
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btnReportIssue"
+                            style="@style/PtButton.Standard"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/btn_report"
+                            app:icon="@drawable/ic_pt_bug"
+                            app:iconSize="18dp" />
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/pt_card_stroke" />
+
+                    <LinearLayout style="@style/PtCardRow">
+
+                        <ImageView
+                            style="@style/PtCardIcon"
+                            android:src="@drawable/ic_pt_code" />
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="12dp"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                style="@style/PtText.CardTitle"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/about_project_title" />
+
+                            <TextView
+                                style="@style/PtText.CardDesc"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/about_project_desc" />
+                        </LinearLayout>
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btnProjectPage"
+                            style="@style/PtButton.Standard"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/btn_open"
+                            app:icon="@drawable/ic_pt_code"
+                            app:iconSize="18dp" />
+                    </LinearLayout>
+
+
+                    <TextView
+                        style="@style/PtText.CardDesc"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/pt_log_bg"
+                        android:padding="16dp"
+                        android:text="@string/about_disclaimer" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.core.widget.NestedScrollView>

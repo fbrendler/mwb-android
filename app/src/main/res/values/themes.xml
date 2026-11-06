@@ -1,0 +1,22 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Tema que segue o sistema (claro/escuro), com cores no estilo PowerToys. -->
+    <style name="Base.Theme.BrendlerMwb" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/pt_accent</item>
+        <item name="colorOnPrimary">@color/pt_on_accent</item>
+        <item name="colorPrimaryContainer">@color/pt_accent_soft</item>
+        <item name="colorOnPrimaryContainer">@color/pt_text_primary</item>
+        <item name="colorSecondary">@color/pt_accent</item>
+        <item name="colorOnSecondary">@color/pt_on_accent</item>
+        <item name="colorSurface">@color/pt_card</item>
+        <item name="colorOnSurface">@color/pt_text_primary</item>
+        <item name="colorOnSurfaceVariant">@color/pt_text_secondary</item>
+        <item name="colorOutline">@color/pt_control_stroke</item>
+        <item name="colorError">@color/pt_critical</item>
+        <item name="android:colorBackground">@color/pt_page</item>
+        <item name="android:windowBackground">@color/pt_page</item>
+        <item name="android:textColorPrimary">@color/pt_text_primary</item>
+        <item name="android:textColorSecondary">@color/pt_text_secondary</item>
+    </style>
+
+    <style name="Theme.BrendlerMwb" parent="Base.Theme.BrendlerMwb" />
+</resources>
