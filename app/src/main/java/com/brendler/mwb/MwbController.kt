@@ -30,8 +30,13 @@ object MwbController : MwbListener {
     private val logBuffer = StringBuilder()
     private val remote = RemoteInput(
         switchBack = { x, y -> session?.requestSwitchBack(x, y) ?: false },
-        log = { msg -> onLog(msg) }
+        log = { msg -> onLog(msg) },
+        pcSide = { pcSide() },
+        onSideLearned = { side -> saveLearnedSide(side) }
     )
+
+    /** Nome deste aparelho na sessão atual (para achar a posição dele no layout). */
+    @Volatile private var myName: String = ""
 
     @Volatile private var session: MwbSession? = null
 
@@ -44,7 +49,61 @@ object MwbController : MwbListener {
     fun init(context: Context) {
         if (appContext != null) return
         appContext = context.applicationContext
+        loadLayout(context.applicationContext)
         watchNetwork(context.applicationContext)
+    }
+
+    /**
+     * O PC só manda o layout quando ele muda; guardamos o último para saber de que lado o PC está
+     * mesmo depois de reiniciar o app.
+     */
+    private fun loadLayout(ctx: Context) {
+        val prefs = ctx.getSharedPreferences(PREFS, Context.MODE_PRIVATE)
+        val saved = prefs.getString("layout_names", null) ?: return
+        val names = saved.split('\n')
+        if (names.size == 4) {
+            layoutNames = names
+            layoutTwoRows = prefs.getBoolean("layout_two_rows", false)
+        }
+    }
+
+    /**
+     * Lado em que o PC conectado fica em relação a este aparelho, segundo o layout do PowerToys
+     * ("LEFT", "RIGHT", "TOP", "BOTTOM"), ou null se não der para saber.
+     */
+    private fun pcSide(): String? = layoutSide() ?: learnedSide()
+
+    /** Lado aprendido na prática (borda usada para devolver o mouse), guardado por PC. */
+    private fun learnedSide(): String? {
+        val ctx = appContext ?: return null
+        val pc = peerName.trim().lowercase()
+        if (pc.isEmpty()) return null
+        return ctx.getSharedPreferences(PREFS, Context.MODE_PRIVATE).getString("pc_side_$pc", null)
+    }
+
+    private fun saveLearnedSide(side: String) {
+        val ctx = appContext ?: return
+        val pc = peerName.trim().lowercase()
+        if (pc.isEmpty()) return
+        ctx.getSharedPreferences(PREFS, Context.MODE_PRIVATE).edit().putString("pc_side_$pc", side).apply()
+    }
+
+    private fun layoutSide(): String? {
+        val names = layoutNames
+        if (names.size != 4) return null
+        val me = names.indexOfFirst { it.isNotEmpty() && it.equals(myName.trim(), ignoreCase = true) }
+        val pc = names.indexOfFirst { it.isNotEmpty() && it.equals(peerName.trim(), ignoreCase = true) }
+        if (me < 0 || pc < 0 || me == pc) return null
+        val cols = if (layoutTwoRows) 2 else 4
+        val meRow = me / cols
+        val meCol = me % cols
+        val pcRow = pc / cols
+        val pcCol = pc % cols
+        return when {
+            meRow == pcRow -> if (pcCol < meCol) "LEFT" else "RIGHT"
+            meCol == pcCol -> if (pcRow < meRow) "TOP" else "BOTTOM"
+            else -> null
+        }
     }
 
     /** Quando o Wi-Fi volta, tenta reconectar na hora (em vez de esperar a próxima tentativa). */
@@ -129,6 +188,7 @@ object MwbController : MwbListener {
     fun start(host: String, port: Int, key: String, machineName: String, machineId: Int) {
         stop()
         isRunning = true
+        myName = machineName
         val ctx = appContext
         val resolver: ((String) -> String?)? = if (ctx == null || PcFinder.isIp(host)) null
         else { name -> PcFinder.find(ctx, name, port, key) { onLog(it) } }
@@ -354,6 +414,10 @@ object MwbController : MwbListener {
     override fun onLayout(names: List<String>, twoRows: Boolean) {
         layoutNames = names
         layoutTwoRows = twoRows
+        appContext?.getSharedPreferences(PREFS, Context.MODE_PRIVATE)?.edit()
+            ?.putString("layout_names", names.joinToString("\n"))
+            ?.putBoolean("layout_two_rows", twoRows)
+            ?.apply()
         main.post { ui?.onLayoutChanged() }
     }
 }

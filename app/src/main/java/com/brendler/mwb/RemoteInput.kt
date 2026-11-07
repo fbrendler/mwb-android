@@ -16,7 +16,11 @@ import kotlin.math.abs
 class RemoteInput(
     /** Pede ao PC para trazer o mouse de volta (x, y de 0 a 65535 na tela do PC). */
     private val switchBack: (Int, Int) -> Boolean = { _, _ -> false },
-    private val log: (String) -> Unit = {}
+    private val log: (String) -> Unit = {},
+    /** Lado do PC segundo o layout ("LEFT", "RIGHT", "TOP", "BOTTOM") ou null se desconhecido. */
+    private val pcSide: () -> String? = { null },
+    /** Sem layout: a borda usada para devolver o mouse vira o lado aprendido do PC. */
+    private val onSideLearned: (String) -> Unit = {}
 ) {
 
     private var lastX = 0f
@@ -36,6 +40,8 @@ class RemoteInput(
     // Devolução do mouse ao PC: o caminho de volta é a borda por onde o mouse entrou.
     private enum class Edge { LEFT, RIGHT, TOP, BOTTOM }
     private var entryEdge = Edge.LEFT
+    /** Mouse chegou longe das bordas e o lado do PC é desconhecido: qualquer borda devolve o mouse. */
+    private var anyEdge = false
     private var armed = false
     private var pinnedCount = 0
     private var lastSwitchTime = 0L
@@ -116,15 +122,35 @@ class RemoteInput(
             val dt = lastY
             val db = (h - 1) - lastY
             val min = minOf(minOf(dl, dr), minOf(dt, db))
-            entryEdge = when (min) {
+            val nearest = when (min) {
                 dl -> Edge.LEFT
                 dr -> Edge.RIGHT
                 dt -> Edge.TOP
                 else -> Edge.BOTTOM
             }
-            armed = false
+            // Entrada normal (atravessando a borda): o cursor chega colado na borda e ela é o caminho de volta.
+            // Fora disso (ex.: troca por atalho Ctrl+Alt+F1..F4), vale o lado em que o PC fica no layout.
+            val side = when (pcSide()) {
+                "LEFT" -> Edge.LEFT
+                "RIGHT" -> Edge.RIGHT
+                "TOP" -> Edge.TOP
+                "BOTTOM" -> Edge.BOTTOM
+                else -> null
+            }
+            val atEdge = min <= 0.02f * minOf(w, h)
+            val fromLayout = if (!atEdge && side != null) side else null
+            entryEdge = fromLayout ?: nearest
+            anyEdge = !atEdge && side == null
+            armed = anyEdge // longe das bordas: já pode devolver
             pinnedCount = 0
-            log("Mouse entrou no Android pela borda ${edgeName(entryEdge)}.")
+            val pos = "(${lastX.toInt()}, ${lastY.toInt()} de ${w}x$h)"
+            log(
+                when {
+                    fromLayout != null -> "Mouse entrou no Android longe das bordas $pos; volta ao PC pela borda ${edgeName(entryEdge)} (lado do PC)."
+                    anyEdge -> "Mouse entrou no Android longe das bordas $pos; sem o layout do PC, a primeira borda que o mouse empurrar devolve ao PC."
+                    else -> "Mouse entrou no Android pela borda ${edgeName(entryEdge)}."
+                }
+            )
         }
         service.updateCursor(lastX, lastY)
 
@@ -161,6 +187,9 @@ class RemoteInput(
      * No modo absoluto o PC faz isso sozinho; aqui só entramos se o cursor ficar preso na borda de volta.
      */
     private fun checkReturnToPc(w: Int, h: Int, relative: Boolean) {
+        if (anyEdge) {
+            entryEdge = Edge.entries.minByOrNull { distanceToEdge(it, w, h) } ?: entryEdge
+        }
         val d = distanceToEdge(entryEdge, w, h)
         if (!armed) {
             if (d > 60f) armed = true // só vale depois de se afastar da borda de entrada
@@ -187,8 +216,16 @@ class RemoteInput(
             Edge.BOTTOM -> { x = (lastX / w * 65535).toInt(); y = 40 }
         }
         if (switchBack(x.coerceIn(0, 65535), y.coerceIn(0, 65535))) {
-            log(if (relative) "Borda alcançada: devolvendo o mouse ao PC." else "O PC não devolveu sozinho; pedindo a troca de máquina.")
+            log(
+                (if (relative) "Borda alcançada" else "O PC não devolveu sozinho") +
+                    " (${edgeName(entryEdge)}): devolvendo o mouse ao PC."
+            )
+            if (anyEdge) {
+                onSideLearned(entryEdge.name)
+                log("Lado do PC aprendido: borda ${edgeName(entryEdge)}. Nas próximas vezes só ela devolve o mouse.")
+            }
             hasMouseEntered = false
+            anyEdge = false
             armed = false
             pinnedCount = 0
             isMouseDown = false

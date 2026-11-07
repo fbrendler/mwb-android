@@ -12,7 +12,8 @@ O mouse e o teclado do PC passam a controlar o tablet ou celular, como se fosse 
 - Teclado ABNT2 com acentos (~ ^ ´ `) e Ç.
 - Copiar, colar e recortar texto entre PC e Android.
 - Arquivos e imagens: do PC para o Android (Ctrl+C no PC e levar o mouse ao tablet) e do Android para o PC (botão "Escolher" ou menu Compartilhar).
-- Layout das máquinas mostrado no app; visual no estilo do PowerToys (tema claro e escuro).
+- Layout das máquinas mostrado no app (o último recebido do PC fica guardado); visual no estilo do PowerToys (tema claro e escuro).
+- Troca por atalho (Ctrl+Alt+F1…F4 no PC): o mouse chega no meio da tela e volta ao PC pela borda do lado em que o PC fica no layout. Sem o layout, a primeira borda usada é aprendida.
 - Conexão automática ao ligar o tablet e quando a rede volta.
 
 ## Requisitos
@@ -29,8 +30,12 @@ O mouse e o teclado do PC passam a controlar o tablet ou celular, como se fosse 
 
 Em aparelhos Xiaomi/POCO, para conectar sozinho ao ligar: ajustes do app › **Início automático** ligado e bateria **Sem restrições**.
 
+O PowerToys só envia o layout ao Android quando ele muda. Se o app não mostrar todas as máquinas, mude o layout no PowerToys com o Android conectado (arraste um quadro para outra posição).
+
 ## Como compilar
 Abra a pasta no **Android Studio** e clique em **Run ▶**.
+
+Release assinado: defina em `~/.gradle/gradle.properties` (fora do projeto) `MWB_RELEASE_STORE_FILE`, `MWB_RELEASE_STORE_PASSWORD`, `MWB_RELEASE_KEY_ALIAS` e `MWB_RELEASE_KEY_PASSWORD` e rode `gradlew assembleRelease`. Sem essas propriedades o release sai sem assinatura.
 
 ## Estrutura
 - `protocol/` – protocolo do Mouse sem Bordas (pacotes, criptografia AES-256, conexão, área de transferência, transferência de arquivos, descoberta do PC pelo nome). Código Kotlin puro, testável fora do Android.

@@ -90,7 +90,7 @@
     <string name="about_report_desc">Abre a página de problemas do projeto no GitHub. O log do app é copiado para você colar no relato.</string>
     <string name="btn_report">Relatar</string>
     <string name="about_project_title">Página do projeto</string>
-    <string name="about_project_desc">github.com/fbrendler</string>
+    <string name="about_project_desc">github.com/fbrendler/mwb-android</string>
     <string name="btn_open">Abrir</string>
     <string name="about_disclaimer">Projeto independente, sem ligação com a Microsoft. Mouse Without Borders e PowerToys são marcas da Microsoft.</string>
 </resources>
